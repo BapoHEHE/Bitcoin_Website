@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+   <head>
+       <title>
+           does this need a title
+       </title>
+       <style type="text/css">
+       #headBar{
+           background-color: #0f1113;
+           width: 100%;
+           height: 100px;
+           box-shadow: 1px 10px 10px rgb(0, 0, 0);
+       }
+       #headerInfo{
+           border: transparent;
+           color: white;
+           font-size: 50px;
+           font-family: 'Verdana, sans-serif';
+           float: left;
+       }
+       #tick{
+           float: right;
+           color: white;  
+           font-size: 50px;
+           font-family:'Verdana, sans-serif';
+          
+           background-color: #6b6b66f3;
+           width: 80px;
+           height: 70px;
+           box-shadow: 5px 10px 10px rgb(0, 0, 0);
+      
+       }
+       .table{
+           width: 20%;
+           font-size: 13px;
+           padding: 15px 8px 15px 14px;
+           background: rgba(0, 0, 0, 0.575);
+           border: 2px solid rgb(255, 230, 0);
+           border-radius: 100px;
+           overflow: hidden;
+           position: relative;
+       }
+       .infoLook{
+           color: white;
+           font-size: 25px;
+           text-align: center;
+       }
+       .buttonLook{
+           width: 250px;
+           height: 50px;
+           border-radius: 10px;
+           border-color: yellow;
+           background-color: green;
+           cursor: pointer;
+           font-size: 20px;
+           font-family: 'Verdana, sans-serif';
+           color: rgb(0, 0, 0);
+          
+       }
+       #updateInfoLook{
+           float: right;
+           width: 250px;
+           text-align: center;
+           background-color: rgb(201, 201, 201);
+           border-color: yellow;
+       }
+       .buttonLook:hover{
+           background-color: rgb(0, 255, 42);
+       }
+       #refreshChangeD{
+           background-color: rgba(255, 0, 0, 0.616);
+       }
+       #refreshChangeD:hover{
+           background-color: red;
+       }
+       </style>
+   </head>
+   <body style="background-color: rgb(63, 63, 63);">
+       <table id="headBar" align="center">
+           <tr>
+               <td>
+               <span><p style="color: transparent; float: left;">////</p></span><p id="headerInfo">BitCoin Price API</p>
+               <table border="" style="float: right; height: 10px;">
+                   <tr>
+                       <td>
+                          <p id="tick">&nbsp;&nbsp;T&nbsp;&nbsp;</p>   
+                       </td>
+                   </tr>
+                   <tr>
+                       <p style="color: transparent; float: right;">/////</p>
+                   </tr>
+               </table>
+               </td>
+           </tr>
+       </table>
+       <!-- Time Updater -->
+       <table id="timerTable" align="center">
+           <tr>
+               <td>
+                   <p style="font-size: 30px; color: white;">Updated Time: <span style="font-size: 30px; font-style: italic; font-weight: bold;" id="input0"></span></p>
+               </td>
+           </tr>
+       </table>
+       <!-- Aligns currency tables -->
+       <table style="float: left; width: 20%; height: 600px;"></table>
+       <table style="float: right; width: 20%; height: 600px;" ></table>
+       <!-- USD Table -->
+       <table class="table" style="float: left;">
+           <tr>
+               <td>
+                   <p class="infoLook">Bitcoin - USD: <span style="color: rgb(10, 238, 10);" id="input1"></span></p>
+               </td>
+           </tr>
+       </table>
+       <!-- EUR Table -->
+       <table class="table" style="float: right;">
+           <tr>
+               <td>
+                   <p class="infoLook">Bitcoin - EUR: <span style="color: rgb(10, 238, 10);" id="input3"></span></p>
+               </td>
+           </tr>
+       </table>
+       <!-- GDO Table -->
+       <table class="table" align="center">
+           <tr>
+               <td>
+                   <p class="infoLook">Bitcoin - GBP: <span style="color: rgb(10, 238, 10);" id="input2"></span></p>
+               </td>
+           </tr>
+       </table>
+       <br><br><br><br>
+       <!-- Aligns button's Table -->
+       <table style="float: left; width: 10%; height: 400px;" ></table>
+       <table style="float: right; width: 10%; height: 400px;" ></table>
+      
+       <!-- Table for Buttons -->
+       <!-- Button to increase update rate -->
+       <table style="float: right;">
+           <td>
+               <tr>
+                   <button onclick="changeU()" class="buttonLook" id="refreshChangeU">Increase Update rate</button>
+               </tr>
+           </td>
+       </table>
+     
+       <!-- Button to decrease update rate -->
+       <table style="float: right;" >
+           <tr>
+               <td>
+                   <button onclick="changeD()" class="buttonLook"  id="refreshChangeD">Decrease Update rate</button>
+               </td>
+           </tr>     
+       </table>
+       <!-- Update timer -->
+       <table id="updateInfoLook" border="3">
+           <tr>
+               <td>
+                   <p style="height: 10px;" >Tick Rate <span id="info"></span>ms</p>
+                   <p id="infoSec"></p>
+               </td>
+           </tr>
+       </table>
+       <table style="width: 753px; height: 300px;"></table>
+      
+      
+       <script type="text/javascript">
+       // https://www.coindesk.com/coindesk-api
+       timer();
+      
+       var counter = 1000;
+       var units = "s";
+       var converter = 1000;
+       //Button function to change Update time for the API
+       document.getElementById("info").innerHTML = counter;
+       document.getElementById("infoSec").innerHTML = counter/converter + units;
+      
+      
+       function changeU(){
+           counter = counter + 1000;
+           result = counter;
+           document.getElementById("info").innerHTML = result;
+           document.getElementById("infoSec").innerHTML = result/converter + units;
+           return;
+       };
+       function changeD(){
+           counter = counter - 1000;
+           if (counter == 0){
+               counter = 1000;
+           };
+           result = counter;
+           document.getElementById("info").innerHTML = result;
+           document.getElementById("infoSec").innerHTML = result/converter + units;
+           return;
+       };
+       //Gets API information
+       async function geoData(){
+           document.getElementById("tick").innerHTML = "&nbsp;&nbsp;|||&nbsp;&nbsp";
+           var data = await fetch("https://api.coindesk.com/v1/bpi/currentprice.json");
+           var result = await data.json();
+          
+           console.log(result);
+           var percentage = (parseFloat(result.bpi.USD.rate)* 100);
+           document.getElementById("input0").innerHTML = result.time.updated;
+           document.getElementById("input1").innerHTML = result.bpi.USD.symbol + result.bpi.USD.rate;
+           document.getElementById("input2").innerHTML = result.bpi.GBP.symbol + result.bpi.GBP.rate;
+           document.getElementById("input3").innerHTML = result.bpi.EUR.symbol + result.bpi.EUR.rate;
+          
+          
+           setInterval(timer(), 1000);
+          
+       };
+     
+      //Is the refresh timer which can be changed using the buttons
+       function timer(){
+           document.getElementById("tick").innerHTML = "";
+           setTimeout(geoData, counter);
+          
+       };
+       </script>
+   </body>
+</html>
